@@ -1,0 +1,88 @@
+<!-- A DrawerLayout is intended to be used as the top-level content view using match_parent for both width and height to consume the full space available. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="362dp"
+        android:background="@drawable/rectangle"
+        android:elevation="@dimen/elevation_high">
+
+        <TextView
+            android:id="@+id/tPercentage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/primary_text"
+            android:textSize="32sp"
+            android:layout_above="@+id/cGPA"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="37dp" />
+
+        <TextView
+            android:id="@+id/cGPA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="124dp"
+            android:textSize="24sp"
+            android:textColor="@color/secondary_text"
+            android:layout_alignBottom="@+id/circularProgressbar"
+            android:layout_alignRight="@+id/tPercentage"
+            android:layout_alignEnd="@+id/tPercentage" />
+
+        <ProgressBar
+            android:id="@+id/circularProgressbar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="350dp"
+            android:layout_height="350dp"
+            android:layout_gravity="center_horizontal|top"
+            android:elevation="@dimen/elevation_high"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="75"
+            android:progressDrawable="@drawable/circular_bar"
+            android:secondaryProgress="100"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:id="@+id/add_assignment"
+        android:layout_width="@dimen/round_button_diameter"
+        android:layout_height="@dimen/round_button_diameter"
+        android:layout_marginBottom="@dimen/button_margin"
+        android:layout_marginStart="@dimen/button_margin"
+        android:layout_gravity="left|bottom"
+        android:background="@drawable/oval_ripple"
+        android:elevation="@dimen/elevation_low"
+        android:src="@drawable/ic_content_new"
+        android:tint="@android:color/white"
+        android:contentDescription="@string/action_add_assignment"
+        tools:ignore="RtlCompat" />
+
+    <ImageButton
+        android:id="@+id/edit_assignment"
+        android:layout_width="@dimen/round_button_diameter"
+        android:layout_height="@dimen/round_button_diameter"
+        android:layout_gravity="right|bottom"
+        android:layout_marginBottom="@dimen/button_margin"
+        android:layout_marginEnd="@dimen/button_margin"
+        android:layout_marginRight="24dp"
+        android:background="@drawable/oval_ripple"
+        android:elevation="@dimen/elevation_low"
+        android:src="@drawable/ic_action_edit_dark"
+        android:tint="@android:color/white"
+        tools:ignore="RtlCompat"
+        android:contentDescription="@string/action_edit_assignment" />
+
+</FrameLayout>
+
+
