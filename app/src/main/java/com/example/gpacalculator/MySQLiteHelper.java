@@ -83,7 +83,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Cursor cursor =
                 db.query(TABLE_SUBJECT,
                         COLUMNS,
-                        "Assignment Name = ?",
+                        " ASSIGNMENT_NAME = ?",
                         new String[] { String.valueOf(assmName)},
                         null,
                         null,
@@ -94,7 +94,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         }
 
         Assignment assignment = new Assignment();
-        assignment.setAssmName(cursor.getString(0));
+        assignment.setAssmName(String.valueOf(cursor.getString(0)));
         assignment.setScoreReceived(Float.parseFloat(cursor.getString(1)));
         assignment.setScoreMax(Float.parseFloat(cursor.getString(2)));
         assignment.setWeightage(Float.parseFloat(cursor.getString(3)));

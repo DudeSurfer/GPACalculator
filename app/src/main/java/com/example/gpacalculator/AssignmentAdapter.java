@@ -18,6 +18,7 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
     private List<Assignment> assignmentList;
 
 
+
     public AssignmentAdapter(List<Assignment> assignmentList) {
         this.assignmentList = assignmentList;
     }
@@ -47,7 +48,13 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
         int perc = (int)Math.ceil(mPercentage);
 
-        viewHolder.mAssignmentName.setText(String.valueOf(assignment.getAssmName()));
+        String assignmentName = assignment.getAssmName();
+        if (assignmentName.length() > 18) {
+            assignmentName = assignmentName.substring(0, Math.min(assignmentName.length(), 15));
+            assignmentName+="...";
+        }
+
+        viewHolder.mAssignmentName.setText(assignmentName);
         viewHolder.mGPA.setText(String.valueOf(map.get(map.ceilingKey(perc))));
         viewHolder.mPercentageText.setText(String.valueOf(perc)+"%");
         viewHolder.mScoreText.setText(String.valueOf(assignment.getScoreReceived())+"/"+String.valueOf(assignment.getScoreMax()));
@@ -71,15 +78,6 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
             mGPA = (TextView) v.findViewById(R.id.GPA);
             mScoreText = (TextView) v.findViewById(R.id.score_text);
             mPercentageText = (TextView) v.findViewById(R.id.percentage_text);
-        }
-
-    }
-
-    public static void setMargins (View v, int l, int t, int r, int b) {
-        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
-            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
-            p.setMargins(l, t, r, b);
-            v.requestLayout();
         }
     }
 }

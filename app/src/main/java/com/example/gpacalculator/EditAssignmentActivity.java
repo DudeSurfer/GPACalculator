@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.util.List;
 
 
 public class EditAssignmentActivity extends ActionBarActivity {
@@ -15,6 +18,8 @@ public class EditAssignmentActivity extends ActionBarActivity {
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
     Toolbar toolbar;
+    List<Assignment> assignmentList;
+    Toast mToast;
 
 
     @Override
@@ -27,6 +32,8 @@ public class EditAssignmentActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         setTitle("View Assignments");
 
+        assignmentList = db.getAllAssignments();
+
         mRecyclerView = (RecyclerView)findViewById(R.id.assignments_list_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -34,6 +41,49 @@ public class EditAssignmentActivity extends ActionBarActivity {
 
         mAdapter = new AssignmentAdapter(db.getAllAssignments());
         mRecyclerView.setAdapter(mAdapter);
+
+
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            @Override
+                            public boolean canSwipe(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    String assignmentName = assignmentList.get(position).getAssmName();
+                                    Assignment deleteAssm = db.getAssignment(assignmentName);
+                                    db.deleteAssignment(deleteAssm);
+                                    assignmentList.remove(position);
+                                    mAdapter = new AssignmentAdapter(db.getAllAssignments());
+                                    mRecyclerView.setAdapter(mAdapter);
+
+                                    showToast("You deleted "+assignmentName);
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    String assignmentName = assignmentList.get(position).getAssmName();
+                                    Assignment deleteAssm = db.getAssignment(assignmentName);
+                                    db.deleteAssignment(deleteAssm);
+                                    assignmentList.remove(position);
+                                    mAdapter = new AssignmentAdapter(db.getAllAssignments());
+                                    mRecyclerView.setAdapter(mAdapter);
+
+                                    showToast("You deleted "+assignmentName);
+                                }
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        });
+
+        mRecyclerView.addOnItemTouchListener(swipeTouchListener);
+
 
 
 
@@ -61,4 +111,13 @@ public class EditAssignmentActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void showToast(String textToShow) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(this, textToShow, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
 }
