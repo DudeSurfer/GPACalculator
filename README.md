@@ -6,6 +6,5 @@ GPA Calculator for Assignment 1
 3. Requires Minimum API Level of 21 (Lollipop 5.0)
 4. Progress Bar asset used 
 5. SQL CRUD operations 
-6. EDIT ASSIGNMENT DOES NOT WORK
-7. ^^^^^^^^^^^^^^^^^^
-8. I took a lot of effort making Floating Action Buttons :(
+6. Edit Assignment can only View the Assignments in a cardview
+7. I took a lot of effort making Floating Action Buttons :(
