@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +30,7 @@ public class MainActivity extends ActionBarActivity {
     ImageButton mEditAssignment;
     Typeface typeface;
     MySQLiteHelper db;
+    Toolbar toolbar;
 
 
     @Override
@@ -37,25 +39,28 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
         typeface = Typeface.createFromAsset(getAssets(), "Roboto.ttf"); //setting typeface for lols
 
-         db = new MySQLiteHelper(this); //define SQL Database
+        db = new MySQLiteHelper(this); //define SQL Database
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
         /*This creates a NavigableTreeMap to get GPA more efficiently instead of writing ungodly amounts of code*/
-        map = new TreeMap<>();
-        map.put(0,0.0);
-        map.put(40,0.8);
-        map.put(49,1.6);
-        map.put(54,2.0);
-        map.put(59,2.4);
-        map.put(64,2.8);
-        map.put(69,3.2);
-        map.put(79,3.6);
-        map.put(100,4.0);
+            map = new TreeMap<>();
+            map.put(0,0.0);
+            map.put(40,0.8);
+            map.put(49,1.6);
+            map.put(54,2.0);
+            map.put(59,2.4);
+            map.put(64,2.8);
+            map.put(69,3.2);
+            map.put(79,3.6);
+            map.put(100,4.0);
 
-        /**Test CRUD
+        /*Test CRUD
         db.addAssignment(new Assignment("I love Math",5,20,10));
         db.addAssignment(new Assignment("Meth",50,100,10));
         db.addAssignment(new Assignment("Mathemagic", 10, 30, 50));
-        Only required on for testing run**/
+        Only required on for testing run*/
 
         calcAndSet();
 

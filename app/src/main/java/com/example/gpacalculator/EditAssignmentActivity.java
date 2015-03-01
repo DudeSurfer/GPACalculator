@@ -1,18 +1,41 @@
 package com.example.gpacalculator;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
 public class EditAssignmentActivity extends ActionBarActivity {
 
+    RecyclerView mRecyclerView;
+    RecyclerView.Adapter mAdapter;
+    Toolbar toolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_assignment);
         final MySQLiteHelper db = new MySQLiteHelper(this);
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
+
+        mRecyclerView = (RecyclerView)findViewById(R.id.assignments_list_view);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        mAdapter = new AssignmentAdapter(db.getAllAssignments());
+        mRecyclerView.setAdapter(mAdapter);
+
+
+
     }
 
 
