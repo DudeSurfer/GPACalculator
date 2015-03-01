@@ -27,6 +27,7 @@ public class NewAssignmentActivity extends ActionBarActivity {
         final MySQLiteHelper db = new MySQLiteHelper(this); //get the database
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        setTitle("Add a New Assignment");
 
         List<Assignment> assignmentList = db.getAllAssignments(); //List of Assignments
         for (Assignment assignment : assignmentList) {
@@ -66,7 +67,7 @@ public class NewAssignmentActivity extends ActionBarActivity {
                     showToast("Score Received cannot be greater than Maximum Possible Marks!");
                 }
 
-                else if((Float.parseFloat(scoreMax)+cWeightage)>100){
+                else if((Float.parseFloat(weightage)+cWeightage)>100){
                     showToast("You cannot have more than 100% of credit per year!");
                 }
 

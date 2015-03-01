@@ -25,6 +25,7 @@ public class EditAssignmentActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        setTitle("View Assignments");
 
         mRecyclerView = (RecyclerView)findViewById(R.id.assignments_list_view);
         mRecyclerView.setHasFixedSize(true);
