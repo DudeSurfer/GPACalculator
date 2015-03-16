@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.NavigableMap;
 import java.util.TreeMap;
@@ -16,6 +17,7 @@ import java.util.TreeMap;
 public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.ViewHolder> {
     NavigableMap<Integer,Double> map;
     private List<Assignment> assignmentList;
+    DecimalFormat df;
 
 
 
@@ -46,6 +48,8 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         map.put(79,3.6);
         map.put(100,4.0);
 
+        df = new DecimalFormat("0.#");
+
         int perc = (int)Math.ceil(mPercentage);
 
         String assignmentName = assignment.getAssmName();
@@ -57,7 +61,8 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
         viewHolder.mAssignmentName.setText(assignmentName);
         viewHolder.mGPA.setText(String.valueOf(map.get(map.ceilingKey(perc))));
         viewHolder.mPercentageText.setText(String.valueOf(perc)+"%");
-        viewHolder.mScoreText.setText(String.valueOf(assignment.getScoreReceived())+"/"+String.valueOf(assignment.getScoreMax()));
+        viewHolder.mScoreText.setText(String.valueOf(df.format(assignment.getScoreReceived()))+"/"+String.valueOf(df.format(assignment.getScoreMax())));
+
         map.clear();
     }
 

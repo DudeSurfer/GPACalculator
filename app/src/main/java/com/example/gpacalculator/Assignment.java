@@ -4,6 +4,7 @@ package com.example.gpacalculator;
  * Created by Vignesh Ravi on 19/2/2015.
  */
 public class Assignment {
+    private String subjName;
     private String assmName;
     private float scoreReceived;
     private float scoreMax;
@@ -11,13 +12,22 @@ public class Assignment {
 
     public Assignment(){}
 
-    public Assignment(String assmName, float scoreReceived, float scoreMax, float weightage) {
+    public Assignment(String subjName, String assmName, float scoreReceived, float scoreMax, float weightage) {
         super();
+        this.subjName = subjName;
         this.assmName = assmName;
         this.scoreReceived = scoreReceived;
         this.scoreMax = scoreMax;
         this.weightage = weightage;
         
+    }
+
+    public String getSubjName() {
+        return subjName;
+    }
+
+    public void setSubjName(String subjName) {
+        this.subjName = subjName;
     }
 
     public String getAssmName(){

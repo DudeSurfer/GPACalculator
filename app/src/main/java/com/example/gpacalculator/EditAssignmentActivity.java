@@ -21,6 +21,8 @@ public class EditAssignmentActivity extends ActionBarActivity {
     List<Assignment> assignmentList;
     Toast mToast;
 
+    final String SUBJECT_NAME = "Chemistry";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,16 +34,19 @@ public class EditAssignmentActivity extends ActionBarActivity {
         setSupportActionBar(toolbar);
         setTitle("View Assignments");
 
-        assignmentList = db.getAllAssignments();
+        assignmentList = db.getAssignmentsBySubject(SUBJECT_NAME);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.assignments_list_view);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter = new AssignmentAdapter(db.getAllAssignments());
+        mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
         mRecyclerView.setAdapter(mAdapter);
 
+        if (assignmentList.size()>0) {
+            showToast("Swipe to delete Assignment");
+        }
 
         SwipeableRecyclerViewTouchListener swipeTouchListener =
                 new SwipeableRecyclerViewTouchListener(mRecyclerView,
@@ -55,10 +60,10 @@ public class EditAssignmentActivity extends ActionBarActivity {
                             public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                     String assignmentName = assignmentList.get(position).getAssmName();
-                                    Assignment deleteAssm = db.getAssignment(assignmentName);
+                                    Assignment deleteAssm = db.getAssignment(SUBJECT_NAME, assignmentName);
                                     db.deleteAssignment(deleteAssm);
                                     assignmentList.remove(position);
-                                    mAdapter = new AssignmentAdapter(db.getAllAssignments());
+                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
                                     mRecyclerView.setAdapter(mAdapter);
 
                                     showToast("You deleted "+assignmentName);
@@ -70,10 +75,10 @@ public class EditAssignmentActivity extends ActionBarActivity {
                             public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
                                 for (int position : reverseSortedPositions) {
                                     String assignmentName = assignmentList.get(position).getAssmName();
-                                    Assignment deleteAssm = db.getAssignment(assignmentName);
+                                    Assignment deleteAssm = db.getAssignment(SUBJECT_NAME, assignmentName);
                                     db.deleteAssignment(deleteAssm);
                                     assignmentList.remove(position);
-                                    mAdapter = new AssignmentAdapter(db.getAllAssignments());
+                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
                                     mRecyclerView.setAdapter(mAdapter);
 
                                     showToast("You deleted "+assignmentName);

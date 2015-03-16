@@ -32,6 +32,8 @@ public class MainActivity extends ActionBarActivity {
     MySQLiteHelper db;
     Toolbar toolbar;
 
+    final String SUBJECT_NAME = "Chemistry";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +94,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void calcAndSet() {
 
-        List<Assignment> assignmentList = db.getAllAssignments(); //List of Assignments
+        List<Assignment> assignmentList = db.getAssignmentsBySubject(SUBJECT_NAME); //List of Assignments
         tPercentage = 0; //reset percentage and weightage
         cWeightage = 0;
         for (Assignment assignment : assignmentList) { //loop assignments
@@ -113,15 +115,14 @@ public class MainActivity extends ActionBarActivity {
         mGPA.setTypeface(typeface);
         mPercentage.setTypeface(typeface);
         int weightage = (int)Math.ceil(cWeightage);
-        double percentage = (double)Math.round(cPercentage*10)/10; //set to 1d.p.
         mProgressBar.setProgress(weightage);
-        mPercentage.setText(String.valueOf(percentage)+"%");
+        mPercentage.setText(String.valueOf(perc)+"%");
         mGPA.setText("GPA: "+String.valueOf(cGPA));
     }
 
 
 
-    @Override
+     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);

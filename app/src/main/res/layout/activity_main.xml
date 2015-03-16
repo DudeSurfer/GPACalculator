@@ -59,7 +59,8 @@
             android:textSize="32sp"
             android:layout_above="@+id/cGPA"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="37dp" />
+            android:layout_marginBottom="37dp"
+            android:text="0.0%" />
 
         <TextView
             android:id="@+id/cGPA"
@@ -69,9 +70,9 @@
             android:layout_marginBottom="124dp"
             android:textSize="24sp"
             android:textColor="@color/secondary_text"
+            android:text="GPA: 0.8"
             android:layout_alignBottom="@+id/circularProgressbar"
-            android:layout_alignRight="@+id/tPercentage"
-            android:layout_alignEnd="@+id/tPercentage" />
+            android:layout_centerHorizontal="true" />
 
         <ProgressBar
             android:id="@+id/circularProgressbar"

@@ -20,6 +20,8 @@ public class NewAssignmentActivity extends ActionBarActivity {
     float cWeightage;
     Toolbar toolbar;
 
+    final String SUBJECT_NAME = "Chemistry";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,7 +75,7 @@ public class NewAssignmentActivity extends ActionBarActivity {
 
                 /*Pixie dust and Poof they're added to the database*/
                 else {
-                    db.addAssignment(new Assignment(assignmentName, Float.parseFloat(scoreReceived), Float.parseFloat(scoreMax), Float.parseFloat(weightage)));
+                    db.addAssignment(new Assignment(SUBJECT_NAME, assignmentName, Float.parseFloat(scoreReceived), Float.parseFloat(scoreMax), Float.parseFloat(weightage)));
                     finish();
                 }
             }
