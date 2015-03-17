@@ -1,5 +1,6 @@
 package com.example.gpacalculator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,17 +20,21 @@ public class NewAssignmentActivity extends ActionBarActivity {
     Toast mToast;
     float cWeightage;
     Toolbar toolbar;
+    Intent intent;
 
-    final String SUBJECT_NAME = "Chemistry";
+    String SUBJECT_NAME;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_assignment);
         final MySQLiteHelper db = new MySQLiteHelper(this); //get the database
+        intent = getIntent();
+        SUBJECT_NAME = intent.getStringExtra("SUBJECT_NAME");
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        setTitle("Add a New Assignment");
+        setTitle("Add "+SUBJECT_NAME+" Assignment");
 
         List<Assignment> assignmentList = db.getAllAssignments(); //List of Assignments
         for (Assignment assignment : assignmentList) {

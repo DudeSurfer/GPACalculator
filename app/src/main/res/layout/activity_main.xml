@@ -14,7 +14,7 @@
         android:layout_width="match_parent" />
 
     <ImageButton
-        android:id="@+id/add_assignment"
+        android:id="@+id/add_subject"
         android:layout_width="@dimen/round_button_diameter"
         android:layout_height="@dimen/round_button_diameter"
         android:layout_gravity="right|bottom"
@@ -27,69 +27,33 @@
         android:contentDescription="@string/action_add_assignment"
         tools:ignore="RtlCompat" />
 
-    <ImageButton
-        android:id="@+id/edit_assignment"
-        android:layout_width="@dimen/round_button_diameter"
-        android:layout_height="@dimen/round_button_diameter"
-        android:layout_marginBottom="@dimen/button_margin"
-        android:layout_marginStart="@dimen/button_margin"
-        android:layout_gravity="left|bottom"
-        android:background="@drawable/oval_ripple"
-        android:elevation="@dimen/elevation_low"
-        android:src="@drawable/ic_toc_18dp"
-        android:tint="@android:color/white"
-        tools:ignore="RtlCompat"
-        android:contentDescription="@string/action_edit_assignment" />
 
     <RelativeLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="362dp"
+        android:layout_height="100dp"
         android:background="@drawable/rectangle"
         android:elevation="@dimen/elevation_high"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="@dimen/actionBar_margin">
 
         <TextView
-            android:id="@+id/tPercentage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/primary_text"
-            android:textSize="32sp"
-            android:layout_above="@+id/cGPA"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="37dp"
-            android:text="0.0%" />
-
-        <TextView
             android:id="@+id/cGPA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="124dp"
             android:textSize="24sp"
-            android:textColor="@color/secondary_text"
-            android:text="GPA: 0.8"
-            android:layout_alignBottom="@+id/circularProgressbar"
-            android:layout_centerHorizontal="true" />
-
-        <ProgressBar
-            android:id="@+id/circularProgressbar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="350dp"
-            android:layout_height="350dp"
-            android:layout_gravity="center_horizontal|top"
-            android:elevation="@dimen/elevation_high"
-            android:indeterminate="false"
-            android:max="100"
-            android:progress="75"
-            android:progressDrawable="@drawable/circular_bar"
-            android:secondaryProgress="100"
+            android:textColor="@color/primary_text"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
-
     </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/subjects_list_view"
+        android:scrollbars="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="156dp"/>
 
 </FrameLayout>
 

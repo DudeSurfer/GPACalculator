@@ -171,6 +171,22 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
     }
 
+    public List<String> getSubjectList() {
+        List<Assignment> assignments = getAllAssignments();
+        List<String> subjectList = new LinkedList<>();
+
+        for (Assignment assignment : assignments) {
+            String subjName = assignment.getSubjName();
+            if (!subjectList.contains(subjName)) {
+                subjectList.add(subjName);
+            }
+        }
+
+        Log.d("getSubjectList", subjectList.toString());
+        return subjectList;
+
+    }
+
     public int updateAssignment(Assignment assignment) {
         SQLiteDatabase db = this.getWritableDatabase();
 

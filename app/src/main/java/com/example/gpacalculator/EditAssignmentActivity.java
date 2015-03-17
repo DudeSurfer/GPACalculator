@@ -1,5 +1,6 @@
 package com.example.gpacalculator;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -20,8 +21,9 @@ public class EditAssignmentActivity extends ActionBarActivity {
     Toolbar toolbar;
     List<Assignment> assignmentList;
     Toast mToast;
+    Intent intent;
 
-    final String SUBJECT_NAME = "Chemistry";
+    String SUBJECT_NAME;
 
 
     @Override
@@ -29,15 +31,17 @@ public class EditAssignmentActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_assignment);
         final MySQLiteHelper db = new MySQLiteHelper(this);
+        intent = getIntent();
+        SUBJECT_NAME = intent.getStringExtra("SUBJECT_NAME");
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
-        setTitle("View Assignments");
+        setTitle("View "+SUBJECT_NAME+" Assignments");
 
         assignmentList = db.getAssignmentsBySubject(SUBJECT_NAME);
 
         mRecyclerView = (RecyclerView)findViewById(R.id.assignments_list_view);
-        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -65,10 +69,11 @@ public class EditAssignmentActivity extends ActionBarActivity {
                                     assignmentList.remove(position);
                                     mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
                                     mRecyclerView.setAdapter(mAdapter);
+                                    mAdapter.notifyDataSetChanged();
 
                                     showToast("You deleted "+assignmentName);
                                 }
-                                mAdapter.notifyDataSetChanged();
+
                             }
 
                             @Override
@@ -80,17 +85,15 @@ public class EditAssignmentActivity extends ActionBarActivity {
                                     assignmentList.remove(position);
                                     mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
                                     mRecyclerView.setAdapter(mAdapter);
+                                    mAdapter.notifyDataSetChanged();
 
                                     showToast("You deleted "+assignmentName);
                                 }
-                                mAdapter.notifyDataSetChanged();
+
                             }
                         });
 
         mRecyclerView.addOnItemTouchListener(swipeTouchListener);
-
-
-
 
     }
 

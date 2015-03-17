@@ -61,4 +61,16 @@ public class Assignment {
     public void setWeightage(float weightage) {
         this.weightage = weightage;
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "subjName='" + subjName + '\'' +
+                ", assmName='" + assmName + '\'' +
+                ", scoreReceived=" + scoreReceived +
+                ", scoreMax=" + scoreMax +
+                ", weightage=" + weightage +
+                '}';
+    }
+
 }

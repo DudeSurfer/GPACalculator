@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto" xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop= "@dimen/button_margin"
+    android:layout_marginRight="@dimen/button_margin"
+    android:layout_marginLeft="@dimen/button_margin"
+    card_view:cardCornerRadius="4dp">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_margin"
+            android:layout_marginLeft="@dimen/card_margin"
+            android:layout_marginTop="@dimen/button_margin"
+            android:textSize="24sp"
+            android:layout_gravity="top|left"
+            android:textColor="@color/primary_text"/>
+        <TextView
+            android:id="@+id/GPA"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginTop="@dimen/button_margin"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="top|right"
+            android:textColor="@color/secondary_text"/>
+
+        <TextView
+            android:id="@+id/percentage_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/button_margin"
+            android:layout_marginRight="32dp"
+            android:layout_marginEnd="32dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="bottom|right"
+            android:textColor="@color/secondary_text"/>
+    </FrameLayout>
+</android.support.v7.widget.CardView>
