@@ -58,7 +58,7 @@
         android:layout_gravity="bottom|right"
         android:background="@drawable/oval_ripple"
         android:elevation="@dimen/elevation_low"
-        android:src="@drawable/ic_content_new"
+        android:src="@drawable/ic_done_white_18dp"
         android:tint="@android:color/white"
         android:contentDescription="@string/add"
         tools:ignore="RtlCompat" />

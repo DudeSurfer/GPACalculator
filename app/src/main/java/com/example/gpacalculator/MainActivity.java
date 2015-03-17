@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.LinkedList;
@@ -26,6 +27,7 @@ public class MainActivity extends ActionBarActivity {
     List<Double> gpaList;
     Toolbar toolbar;
     TextView mGPA;
+    ImageButton mAddSubject;
 
     MySQLiteHelper db;
 
@@ -91,6 +93,8 @@ public class MainActivity extends ActionBarActivity {
                 })
         );
 
+
+
         for (String subject : subjectList) {
             List<Assignment> subjectAssignmentList = db.getAssignmentsBySubject(subject);
             float tPercentage = 0;
@@ -113,6 +117,15 @@ public class MainActivity extends ActionBarActivity {
 
         mGPA = (TextView) findViewById(R.id.cGPA);
         mGPA.setText("GPA: "+calculateAverage(gpaList));
+
+        mAddSubject = (ImageButton) findViewById(R.id.add_subject);
+        mAddSubject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, AddSubjectActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

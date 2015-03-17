@@ -38,6 +38,10 @@
             android:name=".MainSubjectActivity"
             android:label="@string/title_activity_main_subject" >
         </activity>
+        <activity
+            android:name=".AddSubjectActivity"
+            android:label="@string/title_activity_add_subject" >
+        </activity>
     </application>
 
 </manifest>

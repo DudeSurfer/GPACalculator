@@ -28,6 +28,7 @@ public class NewAssignmentActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_assignment);
+
         final MySQLiteHelper db = new MySQLiteHelper(this); //get the database
         intent = getIntent();
         SUBJECT_NAME = intent.getStringExtra("SUBJECT_NAME");
