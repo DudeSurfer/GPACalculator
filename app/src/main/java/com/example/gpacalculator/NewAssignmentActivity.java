@@ -35,6 +35,7 @@ public class NewAssignmentActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Add "+SUBJECT_NAME+" Assignment");
 
         List<Assignment> assignmentList = db.getAllAssignments(); //List of Assignments

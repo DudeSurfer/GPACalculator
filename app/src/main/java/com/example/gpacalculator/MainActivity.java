@@ -1,5 +1,6 @@
 package com.example.gpacalculator;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -119,11 +120,14 @@ public class MainActivity extends ActionBarActivity {
         mGPA.setText("GPA: "+calculateAverage(gpaList));
 
         mAddSubject = (ImageButton) findViewById(R.id.add_subject);
+        final View mAddButton = findViewById(R.id.add_subject);
         mAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddSubjectActivity.class);
-                startActivity(intent);
+                ActivityOptions options = ActivityOptions
+                        .makeSceneTransitionAnimation(MainActivity.this, mAddButton, "Add");
+                startActivity(intent, options.toBundle());
             }
         });
 
@@ -136,9 +140,9 @@ public class MainActivity extends ActionBarActivity {
             for (Double gpa : gpaList) {
                 sum += gpa;
             }
-            return sum / gpaList.size();
+            return roundToSignificantFigures(sum / gpaList.size(), 3);
         }
-        return sum;
+        return roundToSignificantFigures(sum,3);
     }
 
     @Override
@@ -162,4 +166,17 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+        public static double roundToSignificantFigures(double num, int n) {
+            if(num == 0) {
+                return 0;
+            }
+
+            final double d = Math.ceil(Math.log10(num < 0 ? -num: num));
+            final int power = n - (int) d;
+
+            final double magnitude = Math.pow(10, power);
+            final long shifted = Math.round(num*magnitude);
+            return shifted/magnitude;
+        }
 }

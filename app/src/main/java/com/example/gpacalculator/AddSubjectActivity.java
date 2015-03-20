@@ -27,7 +27,9 @@ public class AddSubjectActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Add Subject");
+
 
         mAddButton = (ImageButton) findViewById(R.id.add);
         mAddButton.setOnClickListener(new View.OnClickListener() {
@@ -38,6 +40,10 @@ public class AddSubjectActivity extends ActionBarActivity {
 
                 if (db.getSubjectList().contains(subjectName)){
                     showToast("Subject with the name "+subjectName+" already exists.");
+                }
+
+                if (subjectName.isEmpty()) {
+                    showToast("Please enter a valid Subject Name");
                 }
 
                 else {
@@ -69,7 +75,14 @@ public class AddSubjectActivity extends ActionBarActivity {
             return true;
         }
 
-        return super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // app icon in action bar clicked; goto parent activity.
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void showToast(String textToShow) {

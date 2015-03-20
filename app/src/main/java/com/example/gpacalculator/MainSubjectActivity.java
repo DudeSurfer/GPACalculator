@@ -49,6 +49,7 @@ public class MainSubjectActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(SUBJECT_NAME);
 
         /*This creates a NavigableTreeMap to get GPA more efficiently instead of writing ungodly amounts of code*/

@@ -1,5 +1,6 @@
 package com.example.gpacalculator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,6 +12,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,6 +35,8 @@ public class EditAssignmentActivity extends ActionBarActivity {
 
     String SUBJECT_NAME;
 
+    Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +46,11 @@ public class EditAssignmentActivity extends ActionBarActivity {
         intent = getIntent();
         SUBJECT_NAME = intent.getStringExtra("SUBJECT_NAME");
 
+        Context context = this;
+
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("View "+SUBJECT_NAME+" Assignments");
 
         assignmentList = db.getAssignmentsBySubject(SUBJECT_NAME);
@@ -45,12 +60,48 @@ public class EditAssignmentActivity extends ActionBarActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
+        mAdapter = new AssignmentAdapter(assignmentList);
         mRecyclerView.setAdapter(mAdapter);
 
         if (assignmentList.size()>0) {
             showToast("Swipe to delete Assignment");
         }
+
+
+
+        ArrayList<BarEntry> entries = new ArrayList<>();
+        ArrayList<String> labels = new ArrayList<>();
+        for (Assignment assignment : assignmentList) {
+            double mPercentage = assignment.getScoreReceived() / assignment.getScoreMax() * 100;
+            mPercentage = roundToSignificantFigures(mPercentage,3);
+            float perc = (float) mPercentage;
+            entries.add(new BarEntry(perc, assignmentList.indexOf(assignment)));
+            labels.add(assignment.getAssmName());
+        }
+
+        BarChart chart = (BarChart) findViewById(R.id.assignments_histogram);
+
+        /*Graph formatting*/
+        BarDataSet dataSet = new BarDataSet(entries, "");
+        dataSet.setColor(getResources().getColor(R.color.primary_dark));
+        BarData data = new BarData(labels, dataSet);
+        chart.setData(data);
+        chart.setDrawGridBackground(false);
+        chart.setDrawBarShadow(false);
+        chart.setDescription("");
+
+        XAxis xAxis = chart.getXAxis();
+        xAxis.setEnabled(false);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        YAxis rightAxis = chart.getAxisRight();
+        rightAxis.setEnabled(false);
+        leftAxis.setEnabled(false);
+
+        Legend legend = chart.getLegend();
+        legend.setEnabled(false);
+
+        chart.animateXY(1000, 1000);
 
         SwipeableRecyclerViewTouchListener swipeTouchListener =
                 new SwipeableRecyclerViewTouchListener(mRecyclerView,
@@ -67,11 +118,15 @@ public class EditAssignmentActivity extends ActionBarActivity {
                                     Assignment deleteAssm = db.getAssignment(SUBJECT_NAME, assignmentName);
                                     db.deleteAssignment(deleteAssm);
                                     assignmentList.remove(position);
-                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
-                                    mRecyclerView.setAdapter(mAdapter);
-                                    mAdapter.notifyDataSetChanged();
+
+//                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
+//                                    mRecyclerView.setAdapter(mAdapter);
+//                                    mAdapter.notifyDataSetChanged();
 
                                     showToast("You deleted "+assignmentName);
+
+                                    finish();
+                                    startActivity(getIntent());
                                 }
 
                             }
@@ -83,17 +138,24 @@ public class EditAssignmentActivity extends ActionBarActivity {
                                     Assignment deleteAssm = db.getAssignment(SUBJECT_NAME, assignmentName);
                                     db.deleteAssignment(deleteAssm);
                                     assignmentList.remove(position);
-                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
-                                    mRecyclerView.setAdapter(mAdapter);
-                                    mAdapter.notifyDataSetChanged();
+
+//                                    mAdapter = new AssignmentAdapter(db.getAssignmentsBySubject(SUBJECT_NAME));
+//                                    mRecyclerView.setAdapter(mAdapter);
+//                                    mAdapter.notifyDataSetChanged();
 
                                     showToast("You deleted "+assignmentName);
+
+                                    finish();
+                                    startActivity(getIntent());
                                 }
 
                             }
                         });
 
         mRecyclerView.addOnItemTouchListener(swipeTouchListener);
+
+
+
 
     }
 
@@ -126,6 +188,19 @@ public class EditAssignmentActivity extends ActionBarActivity {
         }
         mToast = Toast.makeText(this, textToShow, Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    public static double roundToSignificantFigures(double num, int n) {
+        if(num == 0) {
+            return 0;
+        }
+
+        final double d = Math.ceil(Math.log10(num < 0 ? -num: num));
+        final int power = n - (int) d;
+
+        final double magnitude = Math.pow(10, power);
+        final long shifted = Math.round(num*magnitude);
+        return shifted/magnitude;
     }
 
 }
