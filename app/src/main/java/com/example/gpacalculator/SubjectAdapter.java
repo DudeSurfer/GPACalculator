@@ -77,9 +77,9 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
 
         public ViewHolder(View v) {
             super(v);
-            mSubjectName = (TextView) v.findViewById(R.id.subject_name);
-            mGPA = (TextView) v.findViewById(R.id.GPA);
-            mPercentageText = (TextView) v.findViewById(R.id.percentage_text);
+            mSubjectName = (TextView) v.findViewById(R.id.subjectItemTextView);
+            mGPA = (TextView) v.findViewById(R.id.gpaItemTextView);
+            mPercentageText = (TextView) v.findViewById(R.id.percentageItemTextView);
         }
     }
 

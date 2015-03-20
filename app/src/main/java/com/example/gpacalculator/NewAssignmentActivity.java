@@ -49,10 +49,10 @@ public class NewAssignmentActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 /*Get them assignment Fields*/
-                EditText assignmentNameField = (EditText) findViewById(R.id.assignment_name);
-                EditText scoreReceivedField = (EditText) findViewById(R.id.score_received);
-                EditText scoreMaxField = (EditText) findViewById(R.id.score_max);
-                EditText weightageField = (EditText) findViewById(R.id.weightage);
+                EditText assignmentNameField = (EditText) findViewById(R.id.assignmentEditText);
+                EditText scoreReceivedField = (EditText) findViewById(R.id.scoreEditText);
+                EditText scoreMaxField = (EditText) findViewById(R.id.maxScoreEditText);
+                EditText weightageField = (EditText) findViewById(R.id.weightageEditText);
                 /*Store em*/
                 String assignmentName = assignmentNameField.getText().toString().trim();
                 String scoreReceived = scoreReceivedField.getText().toString().trim();

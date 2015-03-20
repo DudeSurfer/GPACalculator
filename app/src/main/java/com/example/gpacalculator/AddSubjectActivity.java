@@ -35,7 +35,7 @@ public class AddSubjectActivity extends ActionBarActivity {
         mAddButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText subjectNameField = (EditText) findViewById(R.id.subject_name);
+                EditText subjectNameField = (EditText) findViewById(R.id.subjectItemTextView);
                 String subjectName = subjectNameField.getText().toString().trim();
 
                 if (db.getSubjectList().contains(subjectName)){

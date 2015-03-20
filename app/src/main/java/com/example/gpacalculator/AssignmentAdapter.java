@@ -79,10 +79,10 @@ public class AssignmentAdapter extends RecyclerView.Adapter<AssignmentAdapter.Vi
 
         public ViewHolder(View v) {
             super(v);
-            mAssignmentName = (TextView) v.findViewById(R.id.assignment_name);
-            mGPA = (TextView) v.findViewById(R.id.GPA);
-            mScoreText = (TextView) v.findViewById(R.id.score_text);
-            mPercentageText = (TextView) v.findViewById(R.id.percentage_text);
+            mAssignmentName = (TextView) v.findViewById(R.id.assignmentEditText);
+            mGPA = (TextView) v.findViewById(R.id.gpaItemTextView);
+            mScoreText = (TextView) v.findViewById(R.id.scoreItemTextView);
+            mPercentageText = (TextView) v.findViewById(R.id.percentageItemTextView);
         }
     }
 }

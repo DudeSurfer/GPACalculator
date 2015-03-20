@@ -62,7 +62,7 @@ public class MainActivity extends ActionBarActivity {
         setTitle("GPA Calculator");
 
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.subjects_list_view);
+        mRecyclerView = (RecyclerView)findViewById(R.id.subjectListView);
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -119,8 +119,8 @@ public class MainActivity extends ActionBarActivity {
         mGPA = (TextView) findViewById(R.id.cGPA);
         mGPA.setText("GPA: "+calculateAverage(gpaList));
 
-        mAddSubject = (ImageButton) findViewById(R.id.add_subject);
-        final View mAddButton = findViewById(R.id.add_subject);
+        mAddSubject = (ImageButton) findViewById(R.id.addSubjectButton);
+        final View mAddButton = findViewById(R.id.addSubjectButton);
         mAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

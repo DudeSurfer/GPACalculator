@@ -13,7 +13,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/subject_name"
+            android:id="@+id/subjectItemTextView"
             android:hint="@string/subject_name_hint"
             android:inputType="text"
             android:layout_alignParentLeft="true"

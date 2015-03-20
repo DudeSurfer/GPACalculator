@@ -13,7 +13,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/assignment_name"
+            android:id="@+id/assignmentEditText"
             android:hint="@string/assignment_name_hint"
             android:inputType="text"
             android:layout_alignParentLeft="true"
@@ -22,7 +22,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/score_received"
+            android:id="@+id/scoreEditText"
             android:hint="@string/score_received_hint"
             android:inputType="numberDecimal"
             android:layout_alignParentLeft="true"
@@ -31,7 +31,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/score_max"
+            android:id="@+id/maxScoreEditText"
             android:hint="@string/score_max_hint"
             android:inputType="numberDecimal"
             android:layout_alignParentLeft="true"
@@ -40,7 +40,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/weightage"
+            android:id="@+id/weightageEditText"
             android:hint="@string/weightage_hint"
             android:inputType="numberDecimal"
             android:layout_alignParentLeft="true"

@@ -67,8 +67,6 @@ public class EditAssignmentActivity extends ActionBarActivity {
             showToast("Swipe to delete Assignment");
         }
 
-
-
         ArrayList<BarEntry> entries = new ArrayList<>();
         ArrayList<String> labels = new ArrayList<>();
         for (Assignment assignment : assignmentList) {
