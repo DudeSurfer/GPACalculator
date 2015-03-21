@@ -11,10 +11,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
+import java.util.Arrays;
 import java.util.List;
 
 
-public class NewAssignmentActivity extends ActionBarActivity {
+public class AddAssignmentActivity extends ActionBarActivity {
 
     ImageButton mAddButton;
     Toast mToast;
@@ -53,31 +57,62 @@ public class NewAssignmentActivity extends ActionBarActivity {
                 EditText scoreReceivedField = (EditText) findViewById(R.id.scoreEditText);
                 EditText scoreMaxField = (EditText) findViewById(R.id.maxScoreEditText);
                 EditText weightageField = (EditText) findViewById(R.id.weightageEditText);
+
+                EditText[] FIELDS = {assignmentNameField, scoreReceivedField, scoreMaxField, weightageField};
+
                 /*Store em*/
                 String assignmentName = assignmentNameField.getText().toString().trim();
                 String scoreReceived = scoreReceivedField.getText().toString().trim();
                 String scoreMax = scoreMaxField.getText().toString().trim();
                 String weightage = weightageField.getText().toString().trim();
 
+                String[] INPUT = {assignmentName,scoreReceived,scoreMax,weightage};
+                List<String> INPUT_ARRAY = Arrays.asList(INPUT);
+
                 /*Check their validity*/
+                for (String text : INPUT){
+                    if (text.isEmpty()){
+                        EditText textField = FIELDS[INPUT_ARRAY.indexOf(text)];
+                        YoYo.with(Techniques.Wobble)
+                                .duration(700)
+                                .playOn(textField);
+                    }
+                }
+
                 if (assignmentName.isEmpty() || scoreReceived.isEmpty() || scoreMax.isEmpty() || weightage.isEmpty()) {
                     showToast("Please Complete All Fields");
                 }
 
                 else if (Float.parseFloat(scoreMax) == 0) {
                     showToast("Please enter a valid Maximum Score");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(scoreMaxField);
+
                 }
 
                 else if (Float.parseFloat(weightage) == 0) {
                     showToast("Please enter a valid Weightage");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(weightageField);
                 }
 
                 else if (Float.parseFloat(scoreReceived)>Float.parseFloat(scoreMax)) {
                     showToast("Score Received cannot be greater than Maximum Possible Marks!");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(scoreReceivedField);
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(scoreMaxField);
                 }
 
                 else if((Float.parseFloat(weightage)+cWeightage)>100){
                     showToast("You cannot have more than 100% of credit per year!");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(weightageField);
                 }
 
                 /*Pixie dust and Poof they're added to the database*/

@@ -44,24 +44,24 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         String subjectName = subjectList.get(i);
         List<Assignment> subjectAssignmentList = db.getAssignmentsBySubject(subjectName);
-        float tPercentage = 0;
-        float cWeightage = 0;
-        double cGPA;
+        float totalPercentage = 0;
+        float calculatedWeightage = 0;
+        double calculatedGPA;
 
         for (Assignment assignment : subjectAssignmentList) {
             float weightage = assignment.getWeightage();
             float percentage = (assignment.getScoreReceived() / assignment.getScoreMax()) * weightage;
-            tPercentage += percentage;
-            cWeightage += weightage;
+            totalPercentage += percentage;
+            calculatedWeightage += weightage;
         }
 
-        float cPercentage = tPercentage / cWeightage * 100; //get GPA percentage
-        int perc = (int) Math.ceil(cPercentage); //round UP like what RI does
-        cGPA = map.get(map.ceilingKey(perc)); //get the ceilingKEY
+        float cPercentage = totalPercentage / calculatedWeightage * 100; //get GPA percentage
+        int holderPercentage = (int) Math.ceil(cPercentage); //round UP like what RI does
+        calculatedGPA = map.get(map.ceilingKey(holderPercentage)); //get the ceilingKEY
 
         viewHolder.mSubjectName.setText(subjectName);
-        viewHolder.mGPA.setText(String.valueOf(cGPA));
-        viewHolder.mPercentageText.setText(String.valueOf(perc) + "%");
+        viewHolder.mGPA.setText(String.valueOf(calculatedGPA));
+        viewHolder.mPercentageText.setText(String.valueOf(holderPercentage) + "%");
 
     }
 

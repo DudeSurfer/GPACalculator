@@ -70,7 +70,7 @@ public class MainSubjectActivity extends ActionBarActivity {
         mNewAssignment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainSubjectActivity.this, NewAssignmentActivity.class);
+                Intent intent = new Intent(MainSubjectActivity.this, AddAssignmentActivity.class);
                 intent.putExtra("SUBJECT_NAME", SUBJECT_NAME);
                 startActivity(intent);
             }

@@ -11,6 +11,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 
 public class AddSubjectActivity extends ActionBarActivity {
 
@@ -40,10 +43,16 @@ public class AddSubjectActivity extends ActionBarActivity {
 
                 if (db.getSubjectList().contains(subjectName)){
                     showToast("Subject with the name "+subjectName+" already exists.");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(subjectNameField);
                 }
 
                 if (subjectName.isEmpty()) {
                     showToast("Please enter a valid Subject Name");
+                    YoYo.with(Techniques.Wobble)
+                            .duration(700)
+                            .playOn(subjectNameField);
                 }
 
                 else {

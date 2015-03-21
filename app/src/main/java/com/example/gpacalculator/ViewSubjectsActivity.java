@@ -20,7 +20,7 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 
-public class MainActivity extends ActionBarActivity {
+public class ViewSubjectsActivity extends ActionBarActivity {
     NavigableMap<Integer, Double> map;
     RecyclerView mRecyclerView;
     RecyclerView.Adapter mAdapter;
@@ -87,7 +87,7 @@ public class MainActivity extends ActionBarActivity {
                 new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         String subjectName = subjectList.get(position);
-                        Intent intent = new Intent(MainActivity.this, MainSubjectActivity.class);
+                        Intent intent = new Intent(ViewSubjectsActivity.this, MainSubjectActivity.class);
                         intent.putExtra("SUBJECT_NAME", subjectName);
                         startActivity(intent);
                     }
@@ -98,18 +98,18 @@ public class MainActivity extends ActionBarActivity {
 
         for (String subject : subjectList) {
             List<Assignment> subjectAssignmentList = db.getAssignmentsBySubject(subject);
-            float tPercentage = 0;
+            float totalPercentage = 0;
             float cWeightage = 0;
             double cGPA;
 
             for (Assignment assignment : subjectAssignmentList) {
                 float weightage = assignment.getWeightage();
                 float percentage = (assignment.getScoreReceived() / assignment.getScoreMax()) * weightage;
-                tPercentage += percentage;
+                totalPercentage += percentage;
                 cWeightage += weightage;
             }
 
-            float cPercentage = tPercentage / cWeightage * 100; //get GPA percentage
+            float cPercentage = totalPercentage / cWeightage * 100; //get GPA percentage
             int perc = (int) Math.ceil(cPercentage); //round UP like what RI does
             cGPA = map.get(map.ceilingKey(perc)); //get the ceilingKEY
 
@@ -124,9 +124,9 @@ public class MainActivity extends ActionBarActivity {
         mAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, AddSubjectActivity.class);
+                Intent intent = new Intent(ViewSubjectsActivity.this, AddSubjectActivity.class);
                 ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation(MainActivity.this, mAddButton, "Add");
+                        .makeSceneTransitionAnimation(ViewSubjectsActivity.this, mAddButton, "Add");
                 startActivity(intent, options.toBundle());
             }
         });
