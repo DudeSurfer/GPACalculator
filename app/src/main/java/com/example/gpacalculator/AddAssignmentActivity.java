@@ -42,7 +42,7 @@ public class AddAssignmentActivity extends ActionBarActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("Add "+SUBJECT_NAME+" Assignment");
 
-        List<Assignment> assignmentList = db.getAllAssignments(); //List of Assignments
+        List<Assignment> assignmentList = db.getAssignmentsBySubject(SUBJECT_NAME); //List of Assignments
         for (Assignment assignment : assignmentList) {
             float weightage = assignment.getWeightage();
             cWeightage+=weightage; //get the total weightage of all assignments added SO FAR
@@ -70,12 +70,34 @@ public class AddAssignmentActivity extends ActionBarActivity {
                 List<String> INPUT_ARRAY = Arrays.asList(INPUT);
 
                 /*Check their validity*/
+                try {
+                    Float.parseFloat(scoreReceived);
+                } catch (Exception e) {
+                    showToast("Please ensure that your Received Score is valid");
+                    wobble(scoreReceivedField, 500);
+                    return;
+                }
+
+                try {
+                    Float.parseFloat(scoreMax);
+                } catch (Exception e) {
+                    showToast("Please ensure that your Maximum Score is valid");
+                    wobble(scoreMaxField, 500);
+                    return;
+                }
+
+                try {
+                    Float.parseFloat(weightage);
+                } catch (Exception e) {
+                    showToast("Please ensure that your Weightage is valid");
+                    wobble(weightageField, 500);
+                    return;
+                }
+
                 for (String text : INPUT){
                     if (text.isEmpty()){
                         EditText textField = FIELDS[INPUT_ARRAY.indexOf(text)];
-                        YoYo.with(Techniques.Wobble)
-                                .duration(700)
-                                .playOn(textField);
+                        wobble(textField, 500);
                     }
                 }
 
@@ -83,36 +105,26 @@ public class AddAssignmentActivity extends ActionBarActivity {
                     showToast("Please Complete All Fields");
                 }
 
-                else if (Float.parseFloat(scoreMax) == 0) {
+                else if (Float.parseFloat(scoreMax) == 0 ) {
                     showToast("Please enter a valid Maximum Score");
-                    YoYo.with(Techniques.Wobble)
-                            .duration(700)
-                            .playOn(scoreMaxField);
+                    wobble(scoreMaxField, 500);
 
                 }
 
                 else if (Float.parseFloat(weightage) == 0) {
                     showToast("Please enter a valid Weightage");
-                    YoYo.with(Techniques.Wobble)
-                            .duration(700)
-                            .playOn(weightageField);
+                    wobble(weightageField, 500);
                 }
 
                 else if (Float.parseFloat(scoreReceived)>Float.parseFloat(scoreMax)) {
                     showToast("Score Received cannot be greater than Maximum Possible Marks!");
-                    YoYo.with(Techniques.Wobble)
-                            .duration(700)
-                            .playOn(scoreReceivedField);
-                    YoYo.with(Techniques.Wobble)
-                            .duration(700)
-                            .playOn(scoreMaxField);
+                    wobble(scoreReceivedField, 500);
+                    wobble(scoreMaxField, 500);
                 }
 
                 else if((Float.parseFloat(weightage)+cWeightage)>100){
                     showToast("You cannot have more than 100% of credit per year!");
-                    YoYo.with(Techniques.Wobble)
-                            .duration(700)
-                            .playOn(weightageField);
+                    wobble(weightageField, 500);
                 }
 
                 /*Pixie dust and Poof they're added to the database*/
@@ -153,6 +165,12 @@ public class AddAssignmentActivity extends ActionBarActivity {
         }
         mToast = Toast.makeText(this, textToShow, Toast.LENGTH_SHORT);
         mToast.show();
+    }
+
+    private void wobble(EditText field, int duration) {
+        YoYo.with(Techniques.Wobble)
+                .duration(duration)
+                .playOn(field);
     }
 
 
