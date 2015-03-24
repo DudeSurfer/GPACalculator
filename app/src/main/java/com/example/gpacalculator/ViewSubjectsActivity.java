@@ -1,6 +1,7 @@
 package com.example.gpacalculator;
 
-import android.app.ActivityOptions;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,11 +9,14 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -29,6 +33,7 @@ public class ViewSubjectsActivity extends ActionBarActivity {
     Toolbar toolbar;
     TextView mGPA;
     ImageButton mAddSubject;
+    Toast mToast;
 
     MySQLiteHelper db;
 
@@ -84,7 +89,7 @@ public class ViewSubjectsActivity extends ActionBarActivity {
         mRecyclerView.setAdapter(mAdapter);
 
         mRecyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
+                new RecyclerItemSingleClickListener(this, new RecyclerItemSingleClickListener.OnItemClickListener() {
                     @Override public void onItemClick(View view, int position) {
                         String subjectName = subjectList.get(position);
                         Intent intent = new Intent(ViewSubjectsActivity.this, MainSubjectActivity.class);
@@ -94,6 +99,62 @@ public class ViewSubjectsActivity extends ActionBarActivity {
                 })
         );
 
+        SwipeableRecyclerViewTouchListener swipeTouchListener =
+                new SwipeableRecyclerViewTouchListener(mRecyclerView,
+                        new SwipeableRecyclerViewTouchListener.SwipeListener() {
+                            @Override
+                            public boolean canSwipe(int position) {
+                                return true;
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeLeft(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    final int cardPosition = position;
+                                    final String subjectName = subjectList.get(cardPosition);
+                                    new AlertDialog.Builder(ViewSubjectsActivity.this)
+                                            .setTitle("Delete Subject")
+                                            .setMessage("Do you really want to delete "+subjectName+"?")
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    List<Assignment> assignmentList= db.getAssignmentsBySubject(subjectName);
+                                                    for (Assignment assignment : assignmentList) {
+                                                        db.deleteAssignment(assignment);
+                                                    }
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                }})
+                                            .setNegativeButton(android.R.string.no, null).show();
+                                }
+
+                            }
+
+                            @Override
+                            public void onDismissedBySwipeRight(RecyclerView recyclerView, int[] reverseSortedPositions) {
+                                for (int position : reverseSortedPositions) {
+                                    final int cardPosition = position;
+                                    final String subjectName = subjectList.get(cardPosition);
+                                    new AlertDialog.Builder(ViewSubjectsActivity.this)
+                                            .setTitle("Delete Subject")
+                                            .setMessage("Do you really want to delete "+subjectName+"?")
+                                            .setIcon(android.R.drawable.ic_dialog_alert)
+                                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                    List<Assignment> assignmentList= db.getAssignmentsBySubject(subjectName);
+                                                    for (Assignment assignment : assignmentList) {
+                                                        db.deleteAssignment(assignment);
+                                                    }
+                                                    finish();
+                                                    startActivity(getIntent());
+                                                }})
+                                            .setNegativeButton(android.R.string.no, null).show();
+                                }
+
+                            }
+                        });
+
+        mRecyclerView.addOnItemTouchListener(swipeTouchListener);
 
 
         for (String subject : subjectList) {
@@ -120,14 +181,49 @@ public class ViewSubjectsActivity extends ActionBarActivity {
         mGPA.setText("GPA: "+calculateAverage(gpaList));
 
         mAddSubject = (ImageButton) findViewById(R.id.addSubjectButton);
-        final View mAddButton = findViewById(R.id.addSubjectButton);
         mAddSubject.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ViewSubjectsActivity.this, AddSubjectActivity.class);
-                ActivityOptions options = ActivityOptions
-                        .makeSceneTransitionAnimation(ViewSubjectsActivity.this, mAddButton, "Add");
-                startActivity(intent, options.toBundle());
+                LayoutInflater li = LayoutInflater.from(ViewSubjectsActivity.this);
+                View promptsView = li.inflate(R.layout.add_subject_prompt_layout, null);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ViewSubjectsActivity.this);
+
+                alertDialogBuilder.setView(promptsView);
+
+                final EditText userInput = (EditText) promptsView.findViewById(R.id.subjectNameText);
+
+               alertDialogBuilder
+                        .setCancelable(false)
+                        .setPositiveButton("ADD",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        String subjectName = userInput.getText().toString();
+                                        if (db.getSubjectList().contains(subjectName)) {
+                                            showToast("Subject with the name " + subjectName + " already exists.");
+
+                                        }
+
+                                        if (subjectName.isEmpty()) {
+                                            showToast("Please enter a valid Subject Name");
+                                        }
+
+                                        else {
+                                            Intent intent = new Intent(ViewSubjectsActivity.this, MainSubjectActivity.class);
+                                            intent.putExtra("SUBJECT_NAME", subjectName);
+                                            startActivity(intent);
+                                        }
+
+                                    }
+                                })
+                        .setNegativeButton("CANCEL",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
             }
         });
 
@@ -167,16 +263,28 @@ public class ViewSubjectsActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-        public static double roundToSignificantFigures(double num, int n) {
-            if(num == 0) {
-                return 0;
-            }
-
-            final double d = Math.ceil(Math.log10(num < 0 ? -num: num));
-            final int power = n - (int) d;
-
-            final double magnitude = Math.pow(10, power);
-            final long shifted = Math.round(num*magnitude);
-            return shifted/magnitude;
+    public static double roundToSignificantFigures(double num, int n) {
+        if (num == 0) {
+            return 0;
         }
+
+        final double d = Math.ceil(Math.log10(num < 0 ? -num : num));
+        final int power = n - (int) d;
+
+        final double magnitude = Math.pow(10, power);
+        final long shifted = Math.round(num * magnitude);
+        return shifted / magnitude;
+    }
+
+    private void showToast(String textToShow) {
+        if (mToast != null) {
+            mToast.cancel();
+        }
+        mToast = Toast.makeText(this, textToShow, Toast.LENGTH_SHORT);
+        mToast.show();
+    }
+
+
+
+
 }

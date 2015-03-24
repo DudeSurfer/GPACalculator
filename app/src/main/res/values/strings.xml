@@ -10,6 +10,8 @@
     <string name="action_edit_assignment">Edit Assignment</string>
     <string name="action_add_assignment">Add Assignment</string>
     <string name="action_add_subject">Add Subject</string>
+    <string name="backslash_divider">/</string>
+    <string name="percentage_symbol">%</string>
 
     <string name="title_activity_new_assignment">NewAssignmentActivity</string>
     <string name="title_activity_edit_assignment">EditAssignmentActivity</string>

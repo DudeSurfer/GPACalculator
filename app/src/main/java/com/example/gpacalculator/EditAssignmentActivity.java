@@ -46,9 +46,7 @@ public class EditAssignmentActivity extends ActionBarActivity {
         intent = getIntent();
         SUBJECT_NAME = intent.getStringExtra("SUBJECT_NAME");
 
-        Context context = this;
-
-        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+       toolbar = (Toolbar) findViewById(R.id.tool_bar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle("View "+SUBJECT_NAME+" Assignments");

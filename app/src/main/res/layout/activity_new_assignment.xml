@@ -20,7 +20,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="50dp" />
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:id="@+id/scoreEditText"
             android:hint="@string/score_received_hint"
@@ -28,15 +28,25 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_marginTop="130dp" />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="@string/backslash_divider"
+            android:textSize="30sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="135dp"
+            android:layout_marginTop="130dp"/>
         <EditText
-            android:layout_width="fill_parent"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:id="@+id/maxScoreEditText"
             android:hint="@string/score_max_hint"
             android:inputType="numberDecimal"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="210dp" />
+            android:layout_marginLeft="150dp"
+            android:layout_marginTop="130dp" />
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -45,7 +55,15 @@
             android:inputType="numberDecimal"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="290dp" />
+            android:layout_marginRight="220dp"
+            android:layout_marginTop="210dp" />
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:text="@string/percentage_symbol"
+            android:textSize="30sp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="210dp" />
 
     </RelativeLayout>
 
